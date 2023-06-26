@@ -1,13 +1,15 @@
 from moviepy.editor import *
 
-screensize = (100,100)
-message = 'Cool effect so what if it does not fit and now i gonna say also and also'
-txtClip = TextClip(message, color='white', font="Amiri-Bold",
-                   kerning = 5, fontsize=80)
-speed = 80 + len(message)*13
-txtClip = txtClip.set_position(lambda t: (-speed*t, 0)).set_duration(3)
-cvc = CompositeVideoClip( [txtClip], size=screensize)
+def ticker(message, duration = 3, bg_color="black", text_color="white", screensize=(100, 100)):
+    txtClip = TextClip(message, color=text_color, font="Amiri-Bold",
+                    kerning = -5, fontsize=80, bg_color=bg_color)
+    speed = 50 + len(message)*10
+    txtClip = txtClip.set_position(lambda t: (-speed*t, 0)).set_duration(duration)
+    cvc = CompositeVideoClip( [txtClip], size=screensize)
+
+    cvc.write_videofile('res.avi',fps=25,codec='mpeg4')
 
 
-cvc.write_videofile('wtf.avi',fps=25,codec='mpeg4')
-# print(TextClip.list('color'))
+if __name__ == "__main__":
+    message = 'This is text for testing out my new function'
+    ticker(message, 3, "gray", "chocolate")
