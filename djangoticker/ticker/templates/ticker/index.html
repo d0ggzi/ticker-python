@@ -1,15 +1,16 @@
+{% load static %}
 <!doctype html>
 
 <html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'ticker/css/styles.css' %}" type="text/css">
 
     <title>{{ title }}</title>
 </head>
 
 <body>
-    <!-- Блок контента -->
 	<div class="content-text">
         {% block content %}
         <form action="{% url 'home' %}" method="post">
@@ -17,16 +18,35 @@
         
             <div class="form-error">{{ form.non_field_errors }}</div>
         
-            {% for f in form %}
-            <p><label class="form-label" for="{{ f.id_for_label}}">{{ f.label }}</label> {{ f }} </p>
-            <div class = "form-error"> {{ f.errors }} </div>
-            {% endfor %}
-        
-            <button type="submit">Создать</button>
+            <p><label class="form-label" for="{{ form.message.id_for_label}}">{{ form.message.label }}</label></p>
+            {{ form.message }}
+            <div class = "form-error"> {{ form.message.errors }} </div>
+
+            <p><label class="form-label" for="{{ form.duration.id_for_label}}">{{ form.duration.label }}</label> </p>
+            {{ form.duration }}  <span id="output"></span>
+            <div class = "form-error"> {{ form.duration.errors }} </div>
+
+            <div style="width: 430px; display: inline-block;">
+                <div style="float: left; width: 50%">
+                    <p><label class="form-label" for="{{ form.bg_color.id_for_label}}">{{ form.bg_color.label }}</label> </p>
+                    {{ form.bg_color }} 
+                </div>
+
+                <div style="float: right; width: 50%">
+                    <p><label class="form-label" for="{{ form.text_color.id_for_label}}">{{ form.text_color.label }}</label></p>
+                    {{ form.text_color }} 
+                </div>
+            </div>
+
+            <div class = "form-error"> {{ form.bg_color.errors }} </div>
+            <div class = "form-error"> {{ form.text_color.errors }} </div>
+            
+            <button type="submit" class="form-button">Создать</button>
         </form>
         {% endblock %}
     </div>
-    <!-- Конец блока контента -->
     
+    {% block extrascripts %}<script type="text/JavaScript" src="{%  static 'ticker/js/script.js' %}"></script>{% endblock %}
+
 </body>
 </html>

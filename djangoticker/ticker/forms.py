@@ -10,6 +10,11 @@ class CreateVideoForm(forms.ModelForm):
     class Meta:
         model = Ticker
         fields = ['message', 'duration', 'bg_color', 'text_color']
+        widgets = {
+            'duration': forms.NumberInput(attrs={'type':'range', 'step': '1', 'min': '1', 'max': '15', 'class': 'slider', 'value': '3'}),
+            'bg_color': forms.TextInput(attrs={'class': 'form-input', 'value': 'black'}),
+            'text_color': forms.TextInput(attrs={'class': 'form-input', 'value': 'white'}),
+        }
 
 
     def clean_message(self):

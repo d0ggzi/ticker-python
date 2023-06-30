@@ -6,7 +6,7 @@ def ticker(message, duration=3, bg_color="black", text_color="white", screensize
     try:
         txtClip = TextClip(message, color=text_color, font="PT Mono",
                         kerning = -5, fontsize=80, bg_color=bg_color)
-        speed = (len(message)-3)/duration * 30
+        speed = (len(message)-3)/duration * 35
         txtClip = txtClip.set_position(lambda t: (-speed*t, 0))
         bg_color = [el*255 for el in mc.to_rgb(bg_color)]
         cvc = CompositeVideoClip( [txtClip], size=screensize, bg_color=bg_color).set_duration(duration)

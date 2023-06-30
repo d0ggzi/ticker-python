@@ -5,7 +5,9 @@ from .forms import *
 from moviepy.editor import *
 import os
 import matplotlib.colors as mc
+import logging
 
+_logger = logging.getLogger(__name__)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 screensize=(100, 100)
 
@@ -13,17 +15,20 @@ def ticker(message, duration=3, bg_color="black", text_color="white"):
     try:
         txtClip = TextClip(message, color=text_color, font="PT Mono",
                         kerning = -5, fontsize=80, bg_color=bg_color)
-        speed = (len(message)-3)/duration * 33
+        speed = (len(message)-3)/duration * 35
         txtClip = txtClip.set_position(lambda t: (-speed*t, 0))
         bg_color = [el*255 for el in mc.to_rgb(bg_color)]
         cvc = CompositeVideoClip( [txtClip], size=screensize, bg_color=bg_color).set_duration(duration)
+
+        if not os.path.exists(BASE_DIR+"/video"):
+            os.makedirs(BASE_DIR+"/video")
 
         filename = datetime.strftime(datetime.now(), '%Y-%m-%d-%H-%M-%S')
         cvc.write_videofile(os.path.join(BASE_DIR+"/video",filename) + '.avi',fps=25,codec='mpeg4')
 
         return filename
     except Exception as e:
-        print(e)
+        _logger.info(e)
 
 
 def index(request):
