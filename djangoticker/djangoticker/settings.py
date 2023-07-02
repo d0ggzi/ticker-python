@@ -71,7 +71,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoticker.wsgi.application'
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ["https://*.ngrok-free.app"]
 
 
 # Database
